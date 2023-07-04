@@ -1,7 +1,11 @@
 import { useState } from "react";
-
+const orders = [100, 200, 300];
 function App() {
-  const [couter, setCouter] = useState(1)
+  
+  const [couter, setCouter] = useState(()=>{
+    const total = orders.reduce((total, cur) => total+cur);
+    return total;
+  })
   const handleIncrease =()=>{
     setCouter(pre => pre +1);
   }
