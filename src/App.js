@@ -1,20 +1,19 @@
 import { useState } from "react";
-const orders = [100, 200, 300];
-function App() {
-  
-  const [couter, setCouter] = useState(()=>{
-    const total = orders.reduce((total, cur) => total+cur);
-    return total;
-  })
-  const handleIncrease =()=>{
-    setCouter(pre => pre +1);
-  }
 
+function App() {
+  const [info, setInfo] = useState({name: 'Hoa', age: '25'});
+    const handleUpdate=()=>{
+      setInfo({
+        ...info,
+        bio: 'aaaa' 
+      })
+    }
   return (
+    
     <>
     <div>
-      <h1>{couter}</h1>
-      <button onClick={handleIncrease}>Tang</button>
+      <h1>{JSON.stringify(info)}</h1>
+      <button onClick={handleUpdate}>Update</button>
     </div>
     </>
   );
