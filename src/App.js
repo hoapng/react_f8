@@ -1,19 +1,34 @@
 import { useState } from "react";
 
 function App() {
-  const [info, setInfo] = useState({name: 'Hoa', age: '25'});
-    const handleUpdate=()=>{
-      setInfo({
-        ...info,
-        bio: 'aaaa' 
-      })
-    }
+  
+  const [job, setJob] = useState('')
+  const [list, setList] = useState(()=>{
+    const storageList = JSON.parse(localStorage.getItem('list'));
+    return storageList ?? []
+  }
+    )
+  const handleAdd=()=>{
+    setList(prev => {
+      const newList = [...prev,job];
+
+      //Save to local storage
+      const jsonList = JSON.stringify(newList);
+      localStorage.setItem('list', jsonList)
+      return newList;
+    });
+    setJob('')
+  }
   return (
-    
     <>
     <div>
-      <h1>{JSON.stringify(info)}</h1>
-      <button onClick={handleUpdate}>Update</button>
+      <input value={job} onChange={e => setJob(e.target.value)}/>
+      <button onClick={handleAdd}>ADD</button>
+      <ul>
+        {list.map((item, index)=>(
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
     </>
   );
