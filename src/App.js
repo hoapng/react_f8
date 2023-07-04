@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+
+const gifts = [
+  'i9',
+  'ram 32g',
+  'keyboard'
+]
 
 function App() {
+  const [gift, setGift]= useState();
+  const random =()=>{
+    const index =Math.floor(Math.random() * gifts.length);
+    setGift(gifts[index]);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div>
+      <h1>{gift || 'Chua lay thuong'}</h1>
+      <button onClick={random}>Lay thuong</button>
     </div>
+    </>
   );
 }
 
