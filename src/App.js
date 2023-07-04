@@ -3,7 +3,7 @@ import { useState } from "react";
 function App() {
   const [couter, setCouter] = useState(1)
   const handleIncrease =()=>{
-    setCouter(couter+1);
+    setCouter(pre => pre +1);
   }
 
   return (
