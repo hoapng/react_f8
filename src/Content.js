@@ -1,20 +1,41 @@
-import { useState, useEffect, useLayoutEffect } from "react";
-
+import { useEffect, useRef, useState } from 'react';
+let timerId
 function Content (){
-  const [count, setScount] = useState(0);
-  const handleRun = () => {
-    setScount(count + 1);
-  };
+  const [count, setCount] = useState(60);
+  const timerId = useRef()
+  const preCount = useRef()
+  const h1ref = useRef()
+  useEffect(()=>{
+    preCount.current =count
+  },[])
+  useEffect(()=>{
+    const rect = h1ref.current.getBoundingClientRect()
+    console.log(rect)
+    console.log(h1ref.current)
+  })
 
-    useLayoutEffect(()=>{
-      if(count > 3) setScount(0)
-    },[count])
+  const handleStart = () => {
+    timerId.current = setInterval(()=>{
+      setCount(pre => pre -1)
+    },1000)
+    console.log('Start',timerId.current)
+  };
+  const handleStop = () => {
+    clearInterval(timerId.current);
+    console.log('Stop',timerId.current)
+  };
+  console.log(count, preCount.current)
+
+    useEffect(()=>{
+      
+    },[])
     
     return (
-      <div className="App">
-      <h1>{count}</h1>
-      <button onClick={handleRun}>Click</button>
-    </div>
-      );
+      <div>
+        <h1 ref={h1ref}>{count}</h1>
+        <button onClick={handleStart}>Start</button>
+        <button onClick={handleStop}>Stop</button>
+      </div>
+    );
 }
 export default Content
