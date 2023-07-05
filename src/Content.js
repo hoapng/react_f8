@@ -1,21 +1,30 @@
 import { useState, useEffect } from "react";
+const tabs = ['posts', 'comments', 'albums']
 function Content (){
     // const [title, setTitle] = useState('')
-    const [posts, setPosts] = useState([])
+    const [content, setcontent] = useState([])
+    const [type, setType] = useState('')
+
+    console.log(type)
     useEffect(()=>{
-        fetch('https://jsonplaceholder.typicode.com/posts')
+        fetch(`https://jsonplaceholder.typicode.com/${type}`)
         .then(res=>res.json())
-        .then(posts => {
-            setPosts(posts)
+        .then(content => {
+            setcontent(content)
         })
-    },[])
+    },[type])
     return(
         <>
-        {/* <input 
-        value={title}
-        onChange={e=>setTitle(e.target.value)}/> */}
+        {tabs.map(tab => (
+            <button 
+            key={tab}
+            style={type === tab ? {backgroundColor: "yellow"} : {}}
+            onClick={() => setType(tab)}>
+                {tab}
+            </button>
+        ))}
         <ul>
-            {posts.map(i =>(<li key={i.id}>{i.title}</li>))}
+            {content.map(i =>(<li key={i.id}>{i.title || i.name}</li>))}
         </ul>
         </>
     )

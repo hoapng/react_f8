@@ -6,6 +6,7 @@ function App() {
     <>
     <div>
       <button onClick={()=>setShow(!show)}>show</button>
+      <br/>
       {show && <Content/>}
     </div>
     </>
