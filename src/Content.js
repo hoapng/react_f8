@@ -4,6 +4,7 @@ function Content (){
     // const [title, setTitle] = useState('')
     const [content, setcontent] = useState([])
     const [type, setType] = useState('')
+    const [goTop, setGoTop] = useState(false)
 
     console.log(type)
     useEffect(()=>{
@@ -13,6 +14,21 @@ function Content (){
             setcontent(content)
         })
     },[type])
+
+    useEffect(()=>{
+        const handleScroll = ()=>{
+            console.log(window.scrollY)
+            if (window.scrollY>=200) setGoTop(true)
+            else setGoTop(false)
+        }
+        window.addEventListener('scroll', handleScroll)
+        console.log('addEventListener')
+        //Cleanup function
+        return ()=>{
+            window.removeEventListener('scroll', handleScroll)
+            console.log('removeEventListener')
+        }
+    },[])
     return(
         <>
         {tabs.map(tab => (
@@ -26,6 +42,15 @@ function Content (){
         <ul>
             {content.map(i =>(<li key={i.id}>{i.title || i.name}</li>))}
         </ul>
+        {goTop && (
+            <button
+            style={
+                {position: 'fixed',
+                right: 20,
+                bottom: 20}
+            }
+            >Go Top</button>
+        )}
         </>
     )
 }
