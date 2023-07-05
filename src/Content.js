@@ -1,41 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
-let timerId
-function Content (){
-  const [count, setCount] = useState(60);
-  const timerId = useRef()
-  const preCount = useRef()
-  const h1ref = useRef()
-  useEffect(()=>{
-    preCount.current =count
-  },[])
-  useEffect(()=>{
-    const rect = h1ref.current.getBoundingClientRect()
-    console.log(rect)
-    console.log(h1ref.current)
-  })
+import { memo } from "react";
 
-  const handleStart = () => {
-    timerId.current = setInterval(()=>{
-      setCount(pre => pre -1)
-    },1000)
-    console.log('Start',timerId.current)
-  };
-  const handleStop = () => {
-    clearInterval(timerId.current);
-    console.log('Stop',timerId.current)
-  };
-  console.log(count, preCount.current)
 
-    useEffect(()=>{
-      
-    },[])
-    
+function Content ({count2}){
+  console.log(count2);
+
     return (
       <div>
-        <h1 ref={h1ref}>{count}</h1>
-        <button onClick={handleStart}>Start</button>
-        <button onClick={handleStop}>Stop</button>
+        <h1>Hello {count2}</h1>
       </div>
     );
 }
-export default Content
+export default memo(Content)
