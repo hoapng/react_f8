@@ -1,12 +1,13 @@
 import { memo } from "react";
 
 
-function Content ({count2}){
-  console.log(count2);
+function Content ({onIncrease}){
+  console.log('check');
 
     return (
       <div>
-        <h1>Hello {count2}</h1>
+        <h1>Hello </h1>
+        <button onClick={onIncrease}>Click</button>
       </div>
     );
 }
