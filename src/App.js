@@ -1,35 +1,98 @@
-import { useReducer } from "react";
+import { useReducer, useRef } from "react";
 
 //init state
-const initState = 0;
+const initState = {
+  job: '',
+  list: []
+}
 
 //action
-const UP_ACTION = 'up'
-const DOWN_ACTION = 'down'
+const SET_JOB ='set_job'
+const ADD_JOB ='add_job'
+const DEL_JOB ='del_job'
 
-//reducer
-const reducer = (state, action)=>{
-  console.log('check')
-  switch(action){
-    case UP_ACTION:
-      return state +1
-    case DOWN_ACTION:
-      return state -1
-    default:
-      throw new Error('Invalid')
+const set_job = payload =>{
+  return{
+    type: SET_JOB,
+    payload
   }
 }
 
+const add_job = payload =>{
+  return{
+    type: ADD_JOB,
+    payload
+  }
+}
+
+const del_job = payload =>{
+  return{
+    type: DEL_JOB,
+    payload
+  }
+}
+
+//reducer
+const reducer =(state, action)=>{
+  console.log('action', action)
+  console.log('Pre state', state)
+  let newState
+  switch(action.type){
+    case SET_JOB:
+      newState = {
+        ...state, job: action.payload
+      }
+      break
+    case ADD_JOB:
+      newState ={
+        ...state, list : [...state.list, action.payload]
+      }
+      break
+
+    case DEL_JOB:
+      const newList = [...state.list]
+      newList.splice(action.payload, 1)
+      newState = {
+        ...state, list: newList
+      }
+      break
+    default:
+      throw new Error('Invalid')
+  }
+  return newState
+}
+
 function App() {
-  const [count, dispatch] = useReducer(reducer, initState)
-  
+  const [state, dispatch] = useReducer(reducer, initState)
+  const {job, list} = state
+
+  const inputRef = useRef()
+
+  const handleAdd =()=>{
+    dispatch(add_job(job))
+    dispatch(set_job(''))
+    inputRef.current.focus()
+  }
+  console.log(initState)
   return (
-    <div style={{ padding: '0 20px' }}>
-      <h1>{count}</h1>
-      <button onClick={()=>dispatch(DOWN_ACTION)}>Down</button>
-      <button onClick={()=>dispatch(UP_ACTION)}>Up</button>
+    <div>
+      <h3>Todo</h3>
+      <input
+      ref={inputRef}
+        value={job}
+        placeholder="Enter job name..."
+        onChange={e => {
+          dispatch(set_job(e.target.value))
+        }}
+      />
+      <button onClick={handleAdd}>Add</button>
+      <ul>
+        {list.map((job, index) => (
+          <li key={index}>{job} <button onClick={()=>dispatch(del_job(index))}>X</button></li>
+        ))}
+      </ul>
     </div>
-    )
+  );
 }
 
 export default (App);
