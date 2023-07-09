@@ -1,14 +1,25 @@
-import Content from "./Content";
-import './App.css'
-import { useContext } from "react";
-import { ThemeContext } from "./ThemeContext";
+import { useStore, actions } from "./store";
+
 
 function App (){
-  const context = useContext(ThemeContext)
+  const [state, dispatch] = useStore()
+  const {list, input} = state
+
+  const handleAdd = ()=>{
+    dispatch(actions.add(input))
+  }
+
   return (
     <div style={{ padding: 20 }}>
-      <button onClick={context.toggleTheme}>Toggle theme</button>
-      <Content />
+        <input 
+          value={input} 
+          onChange={e => {
+            dispatch(actions.setInput(e.target.value))}}
+          />
+          <button onClick={handleAdd}>Add</button>
+          {list.map((todo, index) => (
+            <li key={index}>{todo}</li>
+          ))}
     </div>
   );
 }
