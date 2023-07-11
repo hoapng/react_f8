@@ -6,6 +6,7 @@ export default function App() {
     <div className="App">
       <Button />
       <Button primary/>
+      <Button primary disable/>
     </div>
   );
 }
