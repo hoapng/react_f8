@@ -1,27 +1,21 @@
-import Video from "./Video";
-import { useEffect, useRef } from 'react'
+import Heading from "./components/Heading";
+import Paragraph from "./components/Paragraph";
 
-function App (){
-  const videoRef = useRef()
 
-  useEffect(()=>{
-    console.log(videoRef.current)
-  })
-
-  const handlePlay =()=>{
-    videoRef.current.play()
-  }
-
-  const handlePause =()=>{
-    videoRef.current.pause()
-  }
-
+function App() {
   return (
-    <div style={{ padding: 20 }}>
-        <Video ref={videoRef}></Video>
-        <button onClick={handlePlay}>Play</button>
-        <button onClick={handlePause}>Pause</button>
-    </div>
+    <>
+      <div style={{ padding: "50px 100px" }}>
+        <Heading />
+        <Paragraph />
+      </div>
+      <div className="d-flex" style={{ padding: "0 100px" }}>
+        <div>Item 1</div>
+        <div>Item 2</div>
+        <div>Item 3</div>
+      </div>
+      </>
   );
 }
-export default App
+
+export default App;
